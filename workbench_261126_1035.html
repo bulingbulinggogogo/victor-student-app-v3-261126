@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>学生端 APP 控制工作台</title>
+  <link rel="stylesheet" href="workbench_261126_1035.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">V</span><div><h1>学生端 APP 控制工作台</h1><p>任务配置、状态案例与演示辅助</p></div><span class="version">V3</span></div>
+    <nav aria-label="管理工具导航"><a href="versions/index.html" data-version-center>版本中心</a><button class="button primary" type="button" data-open-student>打开学生 Demo</button></nav>
+  </header>
+  <p id="file-mode-note" class="file-mode-note" hidden>当前为本地文件模式。不同文件之间的数据同步取决于浏览器；完整的任务配置联动请通过项目根目录的双击启动入口打开。</p>
+  <div class="workspace">
+    <aside class="sidebar" aria-label="状态案例">
+      <div class="sidebar-heading"><div><h2>状态案例</h2><p>每个案例独立保存演示数据</p></div><span class="count" id="case-count">0</span></div>
+      <label class="search-label" for="case-search">搜索案例</label>
+      <input id="case-search" type="search" placeholder="按编号、名称或状态搜索" autocomplete="off">
+      <label class="search-label" for="case-category">案例分类</label>
+      <select id="case-category"><option value="">全部分类</option></select>
+      <button class="personal-button" type="button" id="personal-session">个人演示空间<span>保留自己的作答与配置</span></button>
+      <div class="case-list" id="case-list" aria-live="polite"></div>
+      <p class="sidebar-note">配置与作答记录仅保存在当前浏览器，不同访问者或设备之间不共享。切换案例不会清空个人演示或其他案例。学生页面独立打开，截图中不包含工作台。</p>
+    </aside>
+    <main>
+      <div id="fatal-error" class="fatal" role="alert" hidden></div>
+      <section class="case-banner" aria-labelledby="case-title">
+        <div><div class="eyebrow"><span id="session-label">个人演示空间</span><span class="session-indicator"></span><span id="case-id-label">personal</span></div><h2 id="case-title">个人演示</h2><p id="case-description">在这里调整任务配置，再打开学生页面体验。</p></div>
+        <div class="banner-actions"><button class="button" type="button" id="copy-case-link">复制学生页链接</button><button class="button" type="button" id="reset-case" disabled>恢复该案例初始状态</button></div>
+        <div class="expected"><span>预期表现</span><p id="case-expected">按当前任务配置与作答记录派生页面状态。</p></div>
+      </section>
+      <section class="object-bar" aria-label="当前演示对象">
+        <label>当前任务<select id="task-select"></select></label>
+        <label>预览套题<select id="paper-select"></select></label>
+        <p>任务配置作用于同任务的所有套题。预览套题只用于选择作答页面与模拟数据。</p>
+      </section>
+      <section class="stats" aria-label="当前状态摘要">
+        <article><span>任务归类</span><strong id="stat-status">--</strong></article>
+        <article><span>曾经达标的套题</span><strong id="stat-completed">--</strong></article>
+        <article><span>任务综合正答率</span><strong id="stat-accuracy">--</strong></article>
+        <article><span>答案公布状态</span><strong id="stat-published">--</strong></article>
+      </section>
+      <div class="main-grid">
+        <section class="panel config-panel" aria-labelledby="config-title">
+          <div class="section-heading"><div><span class="section-kicker">任务配置</span><h2 id="config-title">修改当前任务</h2></div><span class="scope-tag">整个任务生效</span></div>
+          <p class="section-description">提交时检查截止与补交权限；查看成绩单时使用当前公布状态。</p>
+          <form id="task-form">
+            <div class="form-grid">
+              <label>作答模式<select name="mode" required><option value="practice">练习模式</option><option value="exam">考试模式</option></select></label>
+              <label>达标正答率 <span class="muted">0 表示不限制</span><div class="input-suffix"><input type="number" name="passRate" min="0" max="100" step="1" required><span>%</span></div></label>
+              <label class="full">可见时间<input type="datetime-local" name="visibleAt" required></label>
+              <label>开始时间<input type="datetime-local" name="startAt" required></label>
+              <label>截止时间<input type="datetime-local" name="endAt" required></label>
+            </div>
+            <p class="time-note">所有日期时间均按北京时间（UTC+8）填写。</p>
+            <div class="switch-list">
+              <label class="switch-row"><div><strong>允许截止后补交</strong><span>仅从未达标的套题可以补交；曾达标者不可超时刷分。</span></div><input type="checkbox" name="allowLate" role="switch"></label>
+              <label class="switch-row"><div><strong>公布成绩与答案</strong><span>已提交的记录也按当前公布状态展示。</span></div><input type="checkbox" name="published" role="switch"></label>
+              <label class="switch-row"><div><strong>每次新作答打乱选项</strong><span>暂存恢复保持原顺序，解析恢复默认选项顺序。</span></div><input type="checkbox" name="randomOptions" role="switch"></label>
+            </div>
+            <div class="form-footer"><button class="button" type="button" id="reload-config">重新载入配置</button><button class="button primary" type="submit">保存任务配置</button></div>
+            <p class="inline-status" id="config-status" role="status">配置读取中</p>
+          </form>
+        </section>
+        <section class="panel tools-panel" aria-labelledby="tools-title">
+          <div class="section-heading"><div><span class="section-kicker">仅用于演示</span><h2 id="tools-title">模拟辅助工具</h2></div><span class="scope-tag neutral">学生页面不显示</span></div>
+          <div class="clock-card"><div><span>当前模拟时间</span><strong id="clock-now">--</strong></div><span class="live-badge" id="clock-mode">流动</span></div>
+          <label class="clock-label" for="clock-input">设置模拟当前时间<input id="clock-input" type="datetime-local"></label>
+          <div class="button-row"><button class="button" type="button" id="set-clock">应用模拟时间</button><button class="button" type="button" id="real-clock">回到真实时间</button></div>
+          <div class="tool-divider"></div>
+          <div class="student-connection"><span class="connection-dot" id="connection-dot"></span><span id="connection-status">先打开当前套题的学生页面</span></div>
+          <div class="answer-preset"><label>答对题数<input id="correct-count" type="number" value="16" min="0" max="20"></label><label>空题数量<input id="blank-count" type="number" value="0" min="0" max="20"></label></div>
+          <p class="tool-help" id="answer-preset-help">仅预填当前轮答案，仍需在学生页面提交。</p>
+          <button class="button full-width" type="button" data-command="fill" disabled>预填本轮答案</button>
+          <div class="tool-buttons">
+            <button class="button" type="button" data-command="check" disabled>进入 2 分钟检查</button>
+            <button class="button" type="button" data-command="autoSoon" disabled>3 秒后自动交卷</button>
+            <button class="button" type="button" data-command="interrupt" disabled>模拟非主动中断</button>
+            <button class="button" type="button" data-command="report" disabled>查看最新成绩单</button>
+            <button class="button" type="button" data-command="wrong" disabled>进入本次错题巩固</button>
+            <button class="button" type="button" data-command="similar" disabled>进入同类题练习</button>
+          </div>
+          <p class="tool-help">检查与交卷工具仅对考试作答生效。学生页会执行真实流程并回传操作结果。</p>
+          <p class="inline-status" id="tool-status" role="status">打开学生页面后可使用辅助操作。</p>
+        </section>
+      </div>
+      <section class="panel papers-panel" aria-labelledby="papers-title">
+        <div class="section-heading"><div><span class="section-kicker">按套题查看</span><h2 id="papers-title">作答数据与派生状态</h2></div><span class="raw-data-note">工作台展示原始模拟数据</span></div>
+        <div class="table-wrap"><table><thead><tr><th scope="col">套题</th><th scope="col">成功作答</th><th scope="col">完成状态</th><th scope="col">最新正答率</th><th scope="col">当前权限</th><th scope="col">打开学生页</th></tr></thead><tbody id="paper-table"></tbody></table></div>
+        <p class="table-note">是否曾经达标决定完成状态，最新一次成功交卷决定最终成绩。学生端仍按公布规则隐藏受限内容。</p>
+      </section>
+      <footer class="page-footer"><span>管理工具 · 不属于学生正式产品流程或产品 PRD</span><span id="save-indicator">本版本独立保存演示记录</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="copy-fallback" class="copy-fallback" hidden><label for="copy-value">复制未自动完成，请选择以下链接手动复制</label><input id="copy-value" readonly><button class="button" type="button" id="close-copy">关闭</button></div>
+  <script src="state_261126_1035.js"></script>
+  <script src="workbench_261126_1035.js"></script>
+</body>
+</html>
