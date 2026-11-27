@@ -4,6 +4,55 @@
   "projectName": "学生端 APP Demo",
   "versions": [
     {
+      "id": "student-app-v16-261127-1612",
+      "version": "V16",
+      "name": "案例分组与任务正答率规则修正版",
+      "generatedAt": "2026-11-27T16:12:00+08:00",
+      "generatedLabel": "2026-11-27 16:12",
+      "baseline": "本地 V15 · 261127_1503",
+      "entry": "v16_261127_1612/index.html",
+      "workbench": "v16_261127_1612/workbench_261126_1035.html",
+      "caseCount": 528,
+      "caseSummary": "49 组任务 · 528 套去重案例 · 含 248 个存稿案例",
+      "statusLabel": "Pages 已部署，浏览器待验收",
+      "summary": "发布本地 V16 的独立副本，按任务配置与状态归组案例，保留旧版入口；学生代码与素材保持原样，仅调整两处外部管理页的版本中心链接。",
+      "updates": [
+        {
+          "before": "V15 案例存在相同任务设定分散和重复的情况。",
+          "after": "V16 按任务配置与状态归组并重编号，提供配套案例清单及旧新编号对照。"
+        },
+        {
+          "before": "任务正答率口径及案例说明需要调整。",
+          "after": "任务正答率仅汇总曾经达标套题的最新一次成功提交结果；最新一次未达标仍采用最新结果。"
+        },
+        {
+          "before": "存在全部套题达标后公布的案例表述。",
+          "after": "任务完成与答案公布分开：所有套题曾经达标才算完成，完成状态不作为额外公布设置。"
+        },
+        {
+          "before": "截止前无成功作答记录时仍可能出现正答率占位标签。",
+          "after": "截止前无记录不显示正答率标签；截止后且答案已公布才显示正答率--。"
+        }
+      ],
+      "verification": [
+        "V16 产品提交 45d4007a067f8c2d7cc655695d50663f73832d83 对应 GitHub Pages 运行 45974120337 已成功。",
+        "本次发布的 94 个文件已与本地发布副本逐一核对 Git blob SHA1 和文件大小，差异为 0。",
+        "此前 177 个线上文件逐项校验未改动；本次版本中心登记随后增量追加 V16。",
+        "浏览器点击、音频播放和设备体验未实测；Pages 构建不代表业务验收通过。",
+        "本地工作环境在上传末期断开；本地规范索引的部署登记和完整公共清单同步尚待连接恢复。"
+      ],
+      "online": {
+        "repositoryUrl": "https://github.com/bulingbulinggogogo/victor-student-app-v3-261126",
+        "branch": "main",
+        "commit": "45d4007a067f8c2d7cc655695d50663f73832d83",
+        "runUrl": "https://github.com/bulingbulinggogogo/victor-student-app-v3-261126/actions/runs/45974120337",
+        "browserVerified": false,
+        "audioVerified": false,
+        "deployedAt": "2026-11-27T09:30:03Z",
+        "deployed": true
+      }
+    },
+    {
       "id": "student-app-v4-261126-1516",
       "version": "V4",
       "name": "多状态任务与套题版",
