@@ -1,0 +1,417 @@
+/* 学生端 APP v8 局部交互补充，沿用原版字体、色彩及手机布局。 */
+.demo-modal-layer {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(25, 31, 45, .38);
+  overscroll-behavior: contain;
+}
+.phone .demo-modal-layer {
+  position: absolute;
+}
+.demo-modal-layer[hidden] { display: none !important; }
+.demo-modal {
+  width: 100%;
+  max-width: 328px;
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  padding: 25px 20px 20px;
+  border-radius: 18px;
+  background: #fff;
+  color: var(--ink, #242424);
+  box-shadow: 0 16px 45px rgba(24, 40, 70, .18);
+  text-align: center;
+}
+.demo-modal-title {
+  margin: 0 0 13px;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.demo-modal-text {
+  margin: 0;
+  color: #687180;
+  font-size: 14px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+.demo-modal-text p { margin: 0 0 8px; }
+.demo-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+.demo-btn {
+  display: inline-flex;
+  flex: 1 1 110px;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #f0f3fc;
+  color: #526485;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.demo-btn.primary,
+.demo-btn.demo-primary {
+  background: var(--action-blue, #496efc);
+  color: #fff;
+}
+.demo-btn.secondary,
+.demo-btn.demo-secondary {
+  background: #f0f3fc;
+  color: #66748a;
+}
+.demo-btn.danger,
+.demo-btn.demo-danger {
+  background: #fff0ed;
+  color: #db674e;
+}
+.demo-btn:focus-visible,
+.demo-result-history:focus-visible,
+.demo-task-card:focus-visible,
+.demo-history-row:focus-visible {
+  outline: 3px solid rgba(73, 110, 252, .4);
+  outline-offset: 3px;
+}
+.demo-btn:disabled,
+.demo-btn[aria-disabled="true"] {
+  color: #a0a7b3;
+  background: #edf0f5;
+  box-shadow: none;
+}
+.demo-submit-muted {
+  background: #e7ebf0 !important;
+  color: #97a0ad !important;
+  box-shadow: none !important;
+}
+/* Answer records reuse the same screen, header and book-card components as history practice. */
+.demo-history-row .book-name { white-space: normal; overflow-wrap: anywhere; }
+.demo-history-row .book-detail { margin-top: 8px; }
+.demo-history-row .book-action { pointer-events: none; }
+.demo-history-list .demo-list-empty { margin-top: 12px; }
+.result-top { z-index: 3; }
+.result-hero::before, .result-hero::after { pointer-events: none; }
+.exercise-answer-sheet-footer, .exercise-submit-panel { display: none !important; }
+.app .exercise-bottom-next[hidden] { display: none !important; }
+.result-nav:has(.demo-result-history) {
+  position: relative;
+  grid-template-columns: 36px minmax(0, 1fr) 66px;
+  gap: 2px;
+}
+.result-nav:has(.demo-result-history) .result-title {
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.result-nav .assignment-history-link.demo-result-history {
+  justify-self: end;
+  width: auto;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #777;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.demo-result-actions,
+.result-actions.demo-result-actions {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px !important;
+}
+.demo-result-actions .result-action,
+.demo-result-actions .demo-retake,
+.demo-result-actions > button {
+  flex: 1 1 88px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 9px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.demo-result-actions [hidden] { display: none !important; }
+.demo-result-actions .result-action:not([hidden]),
+.app.assignment-retake-result .demo-result-actions .result-action:not([hidden]),
+.app.no-review .demo-result-actions .result-action:not([hidden]) {
+  display: inline-flex !important;
+}
+.demo-exam-future,
+.demo-hidden { display: none !important; }
+.demo-history-screen.active { display: block; }
+.demo-retake {
+  border: 0;
+  border-radius: 999px;
+  background: var(--action-blue);
+  color: #fff;
+  box-shadow: 0 6px 12px rgba(73, 110, 252, .18);
+  font-size: 12px;
+  font-weight: 600;
+}
+.demo-result-neutral .result-answer-number,
+.result-answer-number.demo-result-neutral {
+  border-color: #e4e8ee !important;
+  background: #f7f8fb !important;
+  color: #718098 !important;
+}
+.demo-result-neutral .result-answer-number::before,
+.demo-result-neutral .result-answer-number::after,
+.result-answer-number.demo-result-neutral::before,
+.result-answer-number.demo-result-neutral::after {
+  display: none !important;
+}
+.demo-task-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 15px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+  color: #242424;
+  box-shadow: 0 1px 0 rgba(36, 36, 36, .02);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.demo-task-cover {
+  display: block;
+  flex: 0 0 65px;
+  width: 65px;
+  height: 90px;
+  border-radius: 3px;
+  object-fit: cover;
+  object-position: top center;
+  background: #e7edf4;
+}
+.demo-task-content { flex: 1 1 auto; min-width: 0; }
+.demo-task-title {
+  display: block;
+  margin: 0 0 8px;
+  color: #242424;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.demo-task-meta {
+  display: block;
+  color: #828894;
+  font-size: 10px;
+  line-height: 1.75;
+}
+.demo-task-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 10px;
+  color: #9299a6;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.demo-task-tag {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 4px 7px;
+  border-radius: 6px;
+  background: #f0f3fd;
+  color: #5d7be6;
+  font-size: 10px;
+  line-height: 1.3;
+}
+.demo-task-tag.makeup {
+  background: #fff2e5;
+  color: #db994b;
+}
+.demo-task-tag.completed {
+  background: #edf8f0;
+  color: #3a9e5c;
+}
+.demo-task-tag.history {
+  background: #f0f2f5;
+  color: #939ba8;
+}
+.demo-list-empty {
+  display: grid;
+  place-items: center;
+  min-height: 132px;
+  padding: 24px 18px;
+  border-radius: 10px;
+  background: #fff;
+  color: #9aa1ab;
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+.demo-task-notice {
+  padding: 10px 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background: #f0f3fc;
+  color: #7a88a3;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.demo-exam-locked .exercise-bottom-progress {
+  pointer-events: none;
+}
+.demo-exam-locked .exercise-speed-select {
+  display: none !important;
+}
+@media (max-width: 374px) {
+  .demo-modal-layer { padding: 18px; }
+  .demo-modal { padding: 22px 16px 16px; }
+  .demo-result-actions { gap: 6px !important; }
+  .demo-result-actions .result-action,
+  .demo-result-actions .demo-retake { font-size: 11px; padding: 8px 6px; }
+}
+/* Examination check stage retains an explicit manual-submit action. */
+.app.exam-study-mode.exam-checking .exercise-bottom-next:not([hidden]) { display: inline-flex !important; }
+.app.exam-study-mode.exam-checking .exercise-answer-sheet-footer { display: none !important; }
+.app.exam-study-mode .exercise-audio-toggle.playing .pause-icon { display: none !important; }
+.app.exam-study-mode .exercise-audio-toggle .play-icon { display: block !important; }
+.app .exercise-simulate-fab[hidden] { display: none !important; }
+.app .demo-exam-future { display: none !important; }
+
+/* Hidden controls remain hidden even where original styles specify display. */
+.app .study-settings-group[hidden], .app .exercise-submit-button[hidden] { display: none !important; }
+
+/* State-named task copies reuse the existing cards, with room for longer labels. */
+.practice-task-card .book-name,
+.practice-detail-card .book-name { overflow-wrap: anywhere; }
+
+.practice-paper-list .directory-child-label { flex-direction: row; align-items: center; flex-wrap: nowrap; gap: 8px; min-width: 0; }
+.practice-paper-list .directory-child-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; line-height: 1.45; }
+.demo-paper-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; }
+.practice-paper-list .demo-paper-actions .directory-do { flex: 0 0 auto; min-width: 50px; }
+.practice-paper-list .demo-paper-review { background: #f0f3fc; color: #526da8; }
+.demo-showcase-entry {
+  display: block; width: 100%; padding: 10px 12px; margin: 12px 0 0;
+  border: 1px solid #e5eaf5; border-radius: 9px; background: #f2f5fc;
+  color: #526c9c; font: inherit; font-size: 12px; text-align: left; cursor: pointer;
+}
+.practice-panel .demo-showcase-entry { margin-top: 10px; font-size: 11px; }
+.demo-showcase-entry[hidden], .demo-showcase-layer[hidden] { display: none !important; }
+.demo-showcase-layer {
+  position: fixed; inset: 0; z-index: 1900; display: flex; align-items: flex-end;
+  justify-content: center; padding: 12px; background: rgba(25,31,45,.38);
+}
+.phone .demo-showcase-layer { position: absolute; }
+.demo-showcase-panel {
+  width: 100%; max-width: 440px; max-height: calc(100% - 20px); display: flex;
+  flex-direction: column; overflow: hidden; padding: 18px 14px 12px;
+  border-radius: 18px; background: #f8f9fc; color: #242424;
+}
+.demo-showcase-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.demo-showcase-header h2 { margin: 0; font-size: 17px; font-weight: 650; }
+.demo-showcase-summary { margin: 6px 0 0; color: #7a8494; font-size: 11px; line-height: 1.6; }
+.demo-showcase-close { flex: 0 0 32px; width: 32px; height: 32px; border: 0; background: transparent; color: #768196; font: inherit; font-size: 26px; cursor: pointer; }
+.demo-showcase-note { margin: 12px 0; color: #6f7d91; font-size: 11px; line-height: 1.7; }
+.demo-showcase-search-label { display: grid; gap: 6px; color: #6f7d91; font-size: 11px; }
+.demo-showcase-search { width: 100%; padding: 10px; border: 1px solid #dce3ef; border-radius: 8px; background: #fff; color: #26384f; font: inherit; font-size: 12px; box-sizing: border-box; }
+.demo-showcase-list { display: grid; gap: 10px; overflow-y: auto; min-height: 0; margin-top: 12px; padding-bottom: 3px; overscroll-behavior: contain; }
+.demo-showcase-item { padding: 13px; border: 1px solid #e5eaf2; border-radius: 10px; background: #fff; }
+.demo-showcase-item-top { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.demo-showcase-item h3 { flex: 1 1 180px; margin: 0; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.demo-showcase-state { padding: 3px 6px; border-radius: 5px; background: #eff3fb; color: #62799f; font-size: 10px; line-height: 1.5; }
+.demo-showcase-item p { margin: 7px 0 0; color: #7a8494; font-size: 11px; line-height: 1.7; overflow-wrap: anywhere; }
+.demo-showcase-item .demo-showcase-paper { color: #4f6180; }
+.demo-showcase-item .demo-showcase-expected { color: #65738a; }
+.demo-showcase-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 11px; }
+.demo-showcase-actions .demo-btn { flex: 1 1 100px; min-height: 32px; padding: 6px 8px; border-radius: 7px; font-size: 11px; }
+.demo-showcase-reset { border: 0; background: transparent; color: #8a95a6; padding: 7px 3px; font: inherit; font-size: 10px; cursor: pointer; }
+.demo-showcase-footer { flex: 0 0 auto; margin: 10px 0 0; color: #9aa3b0; font-size: 10px; text-align: center; }
+.demo-showcase-entry:focus-visible, .demo-showcase-close:focus-visible, .demo-showcase-reset:focus-visible { outline: 3px solid rgba(73,110,252,.35); outline-offset: 2px; }
+
+/* V6: records share the paper list and summary components. */
+.demo-history-summary { display: contents; }
+.practice-paper-list .directory-accuracy { flex: 0 0 auto; white-space: nowrap; }
+.demo-paper-actions { flex-wrap: nowrap; }
+.demo-history-list .demo-history-row { width:100%; border:0; border-bottom:1px solid #f0f0f0; border-radius:0; background:#fff; text-align:left; font:inherit; color:inherit; cursor:pointer; }
+.demo-history-list .demo-history-row:last-child { border-bottom:0; }
+.demo-history-list .directory-do { pointer-events:none; }
+.demo-attempt-time { display:block; margin-top:3px; color:#8b93a3; font-size:10px; font-weight:400; }
+.demo-showcase-entry { display:none !important; }
+
+[data-practice-accuracy][hidden] { display:none !important; }
+
+.demo-paper-actions .directory-do { min-width:52px; padding-left:6px; padding-right:6px; }
+.demo-record-date { display:block; }
+
+.demo-books-list { display:grid; gap:12px; }
+.books-screen .books-stack { overflow-y:auto; }
+.demo-books-list .books-card { width:100%; }
+
+.book-learning-screen .book-accuracy-tag[hidden] { display:none !important; }
+
+.demo-paper-unlock { display:block; font-size:10px; color:#a1a8b3; margin-top:3px; }
+
+/* V9: 01 soft purple gradient; action order follows the shared result DOM. */
+.result-actions.demo-result-actions .result-action.demo-retake {
+  background: linear-gradient(100deg, #7d4df1 0%, #a98af3 100%);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(130, 83, 233, .18);
+}
+.demo-history-list .demo-history-row { width:100%; text-align:left; cursor:pointer; }
+.demo-history-list .demo-history-row > .directory-child-label { width:100%; }
+
+/* V11: restore V0 paper-list geometry and single-line names. */
+.practice-paper-list .directory-child {
+  box-sizing:border-box;
+  height:48px;
+  min-height:48px;
+  padding:8px 14px 8px 18px;
+  grid-template-columns:14px minmax(0,1fr) auto;
+}
+.practice-paper-list .directory-child-label {
+  min-width:0; display:inline-flex; flex-wrap:nowrap; align-items:center; gap:8px;
+}
+.practice-paper-list .directory-child-name {
+  display:block; flex:0 1 auto; min-width:0; max-width:100%;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; overflow-wrap:normal;
+  font-size:13px; line-height:1.2; font-weight:500;
+}
+.practice-paper-list .directory-accuracy { flex:0 0 auto; font-size:10px; padding:3px 6px; }
+.practice-task-card .book-name, .practice-detail-card .book-name,
+.demo-books-list .book-name, .book-learning-screen .book-name, .demo-history-summary .book-name {
+  display:block; min-width:0; max-width:100%; white-space:nowrap; overflow:hidden;
+  text-overflow:ellipsis; overflow-wrap:normal; line-height:1.2; -webkit-line-clamp:unset;
+}
+.assignment-nav .assignment-title, [data-practice-detail-title], .exercise-nav h1, .exercise-title, .result-title {
+  min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.demo-history-row .demo-attempt-time { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.app .exercise-settings[hidden], .app.exam-study-mode .exercise-settings { display:none !important; }
+
+.demo-expired-screen.active { display:block; }
+.demo-expired-card { margin:16px; padding:16px; background:#fff; border-radius:12px; }
+.demo-expired-answer-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+.demo-expired-answer { display:grid; gap:4px; text-align:center; padding:8px; background:#f3f4f7; border-radius:8px; color:#737d90; }
+.demo-attempt-ordinal { display:block; }
+
+/* V14: result history is detached outside task reports; explicit hidden guard. */
+.app .demo-result-history[hidden] { display:none !important; }
